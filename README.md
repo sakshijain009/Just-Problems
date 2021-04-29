@@ -1,5 +1,5 @@
 # Competitive-Problems-Java
-Variety of problems in Java. Problems include : <br>
+Variety of problems are availabe in this repo. Problems include : <br>
 * Skyline Problem (brute force and divide and conquer)
 * Crossword Puzzle Using Backtracking (including a ppt explaining the same)
 * Sorting techniques along with test case files
@@ -9,3 +9,5 @@ Variety of problems in Java. Problems include : <br>
    * Insertion Sort
    * Bubble Sort
 * Rod Cutting Problem
+* 2D linked list from matrix in c
+* Heapify in C
