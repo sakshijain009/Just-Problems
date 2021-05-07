@@ -1,5 +1,5 @@
 # Competitive-Problems-Java
- #### <span style="color:blue">Variety of problems are availabe in this repo. Problems include : </span><br>
+<span style='color:blue'>Variety of problems are availabe in this repo. Problems include : </span><br>
 ---
 * Skyline Problem (brute force and divide and conquer)
 * Crossword Puzzle Using Backtracking (including a ppt explaining the same)
