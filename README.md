@@ -9,6 +9,8 @@
    * Selection Sort
    * Insertion Sort
    * Bubble Sort
+   * Linear Search
 * Rod Cutting Problem
 * 2D linked list from matrix in c
 * Heapify in C
+* Binary Search linked list in C
