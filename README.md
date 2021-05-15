@@ -14,3 +14,5 @@
 * 2D linked list from matrix in c
 * Heapify in C
 * Binary Search linked list in C
+* Weighted scheduling in DP and Greedy
+* Longest Palindromic Subsequence
