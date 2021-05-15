@@ -16,3 +16,4 @@
 * Binary Search linked list in C
 * Weighted scheduling in DP and Greedy
 * Longest Palindromic Subsequence
+* Linked List and its operations
