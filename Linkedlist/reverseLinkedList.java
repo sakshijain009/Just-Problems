@@ -96,7 +96,7 @@ class Linked {
         helper=helper.next;
     }
 
-    //Reverse linked list using data by recursion------------------------
+    //Check for palindromic structure------------------------
     public static boolean isPalindrome(LinkedList li){
         helper = li.head;
         return palindromeCheck(li.head);
