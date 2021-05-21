@@ -18,3 +18,4 @@
 * Longest Palindromic Subsequence
 * Linked List and its operations (in C and Java)
 * Stack and its operations
+  * Duplicate Brackets Problem
