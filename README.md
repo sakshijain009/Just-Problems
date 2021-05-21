@@ -1,4 +1,5 @@
 # Problems In Java and C
+https://img.shields.io/badge/Made%20with-Java-green
 #### Variety of problems are availabe in this repo. Problems include : <br>
 ---
 * Skyline Problem (brute force and divide and conquer)
