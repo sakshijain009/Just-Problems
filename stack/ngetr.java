@@ -1,7 +1,7 @@
 import java.io.IOException;
 import java.util.*;
 
-class LinkedList {
+class Stackd {
     public static void main(String[] args) throws IOException{
         Scanner s = new Scanner(System.in);
         Stack<Integer> ans = new Stack<>();
