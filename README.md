@@ -16,6 +16,7 @@
 * Binary Search linked list in C
 * Weighted scheduling in DP and Greedy
 * Longest Palindromic Subsequence
+* Merge Overlapping Intervals
 * Linked List and its operations (in C and Java)
 * Stack and its operations
   * Duplicate Brackets Problem
