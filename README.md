@@ -10,6 +10,16 @@
    * Insertion Sort
    * Bubble Sort
    * Linear Search
+* Linked List
+  * Basic operations
+* Stack
+  * Basic operations
+  * Duplicate Brackets Problem
+  * Next greatest element in array
+* Queue
+  * Basic operations
+* Recursion
+  * Power in linear and logarithmic time
 * Rod Cutting Problem
 * 2D linked list from matrix in c
 * Heapify in C
@@ -17,10 +27,4 @@
 * Weighted scheduling in DP and Greedy
 * Longest Palindromic Subsequence
 * Merge Overlapping Intervals
-* Linked List and its operations (in C and Java)
-* Stack and its operations
-  * Duplicate Brackets Problem
-  * Next greatest element in array
-* Recursion
-  * Power in linear and logarithmic time
  
