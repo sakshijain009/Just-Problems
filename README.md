@@ -10,6 +10,7 @@
    * Insertion Sort
    * Bubble Sort
    * Linear Search
+   * Inversion Count using merge sort and brute force
 * Linked List
   * Basic operations
 * Stack
