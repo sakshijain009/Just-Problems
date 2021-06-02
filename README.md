@@ -23,6 +23,7 @@
   * Power in linear and logarithmic time
   * Tower of Hanoi
   * All subsequence of a string
+  * Staircase Problem
 * Rod Cutting Problem
 * Heapify in C
 * Weighted scheduling in DP and Greedy
