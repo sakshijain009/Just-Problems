@@ -10,6 +10,6 @@
 * Stack
 * Queue
 * Recursion
-* Heapify in C
+* Hashmaps and Heaps
 * DP and Greedy
  
