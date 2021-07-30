@@ -129,7 +129,7 @@ class Testclass
         System.out.println("Size: "+size(root));
         System.out.println("Sum: "+sum(root));
         System.out.println("Max: "+max(root));
-        System.out.println("Height: "+height(root));
+        System.out.println("Height: "+ height(root));
     }
 }
 
