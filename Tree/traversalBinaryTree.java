@@ -1,7 +1,7 @@
 import java.io.IOException;
 import java.util.*;
 
-class Pascal
+class Testclass
 {
     //Declare node of a tree
     public static class Node{
@@ -45,7 +45,7 @@ class Pascal
         preorder(node.right);
     }
 
-    //Display the nodes in a tree in preorder form
+    //Display the nodes in a tree in postorder form
     public static void postorder(Node node){
         if (node == null) return;
 
