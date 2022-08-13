@@ -71,6 +71,10 @@ class Scratch {
         }
 
         System.out.println(comps);
+
+        // Check if entire graph is connected
+        boolean isConnected = comps.size()==1;
+        System.out.println("IS THE GRAPH CONNECTED: " + isConnected);
     }
 
 }
