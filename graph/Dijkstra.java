@@ -20,7 +20,7 @@ class Scratch {
     static class Pair implements Comparable<Pair> {
         int v; // Vertex
         String psf; // Path So Far
-        int wsf; // Wait so Far
+        int wsf; // Weight so Far
 
         Pair(int v, String psf, int wsf){
             this.v = v;
