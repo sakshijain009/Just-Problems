@@ -4,3 +4,9 @@ A Graph is a non-linear data structure consisting of vertices and edges. The ver
 The two most common ways to represent graphs are :
 - Adjacency Matrix
 - Adjacency List
+
+## Hamiltonian Cycle
+Hamiltonian Cycle or Circuit in a graph G is a cycle that visits every vertex of G exactly once and returns to the starting vertex.
+
+## Hamiltonian Path
+Hamiltonian Path in a graph G is a path that visits every vertex of G exactly once and Hamiltonian Path doesn’t have to return to the starting vertex. It’s an open path.
