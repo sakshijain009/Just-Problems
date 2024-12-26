@@ -88,4 +88,24 @@ class Scratch {
         visited.remove(src);
     }
 
+    // Hamiltonian Path Method 2
+    public static void HamiltonianMethod2(ArrayList<Edge>[] graph, int originalSource, int src, HashSet<Integer> visited, String path) {
+
+        visited.add(src);
+        if (visited.size() == graph.length) {
+            if (graph[src].stream().anyMatch(edge -> edge.nbr == originalSource)) {
+                System.out.println("Hamiltonian Cycle : " + path);
+            } else {
+                System.out.println("Hamiltonian Path : " + path);
+            }
+        }
+
+        for (Edge edge : graph[src]) {
+            if (!visited.contains(edge.nbr)){
+                HamiltonianPaths(graph, originalSource, edge.nbr, visited, path + " " + edge.nbr);
+            }
+        }
+        visited.remove(src);
+    }
+
 }
