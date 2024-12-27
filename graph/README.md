@@ -13,3 +13,6 @@ Hamiltonian Cycle or Circuit in a graph G is a cycle that visits every vertex of
 
 ### Hamiltonian Path
 Hamiltonian Path in a graph G is a path that visits every vertex of G exactly once and Hamiltonian Path doesn’t have to return to the starting vertex. It’s an open path.
+
+## Breadth First Search (BFS)
+Breadth-first search is a graph traversal algorithm that starts traversing the graph from the root node and explores all the neighboring nodes. Then, it selects the nearest node and explores all the unexplored nodes. BFS puts every vertex of the graph into two categories - visited and non-visited. It selects a single node in a graph and, after that, visits all the nodes adjacent to the selected node.
