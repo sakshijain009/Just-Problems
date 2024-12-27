@@ -23,3 +23,11 @@ Breadth-first search is a graph traversal algorithm that starts traversing the g
 - In a directed cyclic graph, the edges have a direction, and the cycle must follow the direction of the edges. In an undirected cyclic graph, the edges have no direction, and the cycle can go in any direction.
 - A cyclic graph is bipartite if and only if all its cycles are of even length.
 
+### Bipartite Graph
+A graph is called bipartite if it is possible to split it's vertices in two sets of mutually exclusive and exhaustive vertices such that all edges are across sets. Formally, a graph G = (V, E) is bipartite if and only if its vertex set V can be partitioned into two non-empty subsets X and Y, such that every edge in E has one endpoint in X and the other endpoint in Y.
+
+A graph can be bipartite if
+- It is acyclic
+- It has a cycle of even size (Not if it has any cycle of odd size)
+
+![image](https://github.com/user-attachments/assets/2d40c884-c62d-477b-a581-d7a9d7199210)
