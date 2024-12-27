@@ -16,3 +16,10 @@ Hamiltonian Path in a graph G is a path that visits every vertex of G exactly on
 
 ## Breadth First Search (BFS)
 Breadth-first search is a graph traversal algorithm that starts traversing the graph from the root node and explores all the neighboring nodes. Then, it selects the nearest node and explores all the unexplored nodes. BFS puts every vertex of the graph into two categories - visited and non-visited. It selects a single node in a graph and, after that, visits all the nodes adjacent to the selected node.
+
+### Cyclic Graph
+- A cyclic graph contains one or more cycles or closed paths, which means that you can traverse the graph and end up where you started.
+- A cyclic graph may have multiple cycles of different lengths and shapes. Some cycles may be contained within other cycles. A cyclic graph can be either directed or undirected.
+- In a directed cyclic graph, the edges have a direction, and the cycle must follow the direction of the edges. In an undirected cyclic graph, the edges have no direction, and the cycle can go in any direction.
+- A cyclic graph is bipartite if and only if all its cycles are of even length.
+
