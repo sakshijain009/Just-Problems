@@ -21,7 +21,19 @@ Depth first Search or Depth first traversal is a recursive algorithm for searchi
 Hamiltonian Cycle or Circuit in a graph G is a cycle that visits every vertex of G exactly once and returns to the starting vertex.
 
 ### Hamiltonian Path
-Hamiltonian Path in a graph G is a path that visits every vertex of G exactly once and Hamiltonian Path doesn’t have to return to the starting vertex. It’s an open path.
+Hamiltonian Path in a graph G is a path that visits every vertex of G exactly once and Hamiltonian Path doesn’t have to return to the starting vertex. It’s an open path. 
+
+### Topological Sorting
+Topological sorting for Directed Acyclic Graph (DAG) is a linear ordering of vertices such that for every directed edge u---->v, vertex u comes before v in the ordering. Uses a stack with DFS algorithm to sort. 
+
+Time Complexity: O(V+E)
+
+Output: 5 4 2 3 1 0
+![image](https://github.com/user-attachments/assets/234dd6eb-2269-4406-9eec-43a2cd598a16)
+
+Topological Sort is not possible for graphs with undirected edges because undirected edge between two vertices u and v means, there is an edge from u to v as well as from v to u. Because of this both the nodes u and v depend upon each other and none of them can appear before the other in the topological ordering without creating a contradiction.
+
+Topological Sort is not possible for graphs having cycles? Imagine a graph with 3 vertices and edges = {1 to 2 , 2 to 3, 3 to 1} forming a cycle. Now if we try to topologically sort this graph starting from any vertex, it will always create a contradiction to our definition. All the vertices in a cycle are indirectly dependent on each other hence topological sorting fails.
 
 ## Breadth First Search (BFS)
 Breadth-first search is a graph traversal algorithm that starts traversing the graph from the root node and explores all the neighboring nodes. Then, it selects the nearest node and explores all the unexplored nodes. BFS puts every vertex of the graph into two categories - visited and non-visited. It selects a single node in a graph and, after that, visits all the nodes adjacent to the selected node.
