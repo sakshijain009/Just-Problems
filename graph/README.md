@@ -9,6 +9,7 @@ The two most common ways to represent graphs are :
 Connected component in an undirected graph refers to a group of vertices that are connected to each other through edges, but not connected to other vertices outside the group.
 
 For example in the graph shown below, {0, 1, 2} form a connected component and {3, 4} form another connected component.
+
 ![image](https://github.com/user-attachments/assets/1e712157-b7ed-4998-9666-1837b4f795af)
 
 
