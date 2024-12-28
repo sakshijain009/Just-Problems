@@ -38,3 +38,16 @@ A graph can be bipartite if
 It starts at the source vertex and iteratively selects the unvisited vertex with the smallest tentative distance from the source. It then visits the neighbors of this vertex and updates their tentative distances if a shorter path is found. This process continues until the destination vertex is reached, or all reachable vertices have been visited.
 > Data Structure : Priority Queue
 
+- Dijkstra’s algorithm is used to find the shortest path between two vertices in a weighted graph. It is not designed to find a minimum spanning tree.
+- Dijkstra’s algorithm has a time complexity of O(V^2) for a dense graph and O(E log V) for a sparse graph
+- Dijkstra’s algorithm does not work with graphs that have negative edge weights, as it assumes that all edge weights are non-negative.
+
+### Minimum Spanning Tree (MST)
+A spanning tree is defined as a tree-like subgraph of a connected, undirected graph that includes all the vertices of the graph. Or, to say in Layman’s words, it is a subset of the edges of the graph that forms a tree (acyclic) where every node of the graph is a part of the tree.
+
+The minimum spanning tree has all the properties of a spanning tree with an added constraint of having the minimum possible weights among all possible spanning trees. Like a spanning tree, there can also be many possible MSTs for a graph.
+
+- The number of vertices (V) in the graph and the spanning tree is the same.
+- There is a fixed number of edges in the spanning tree which is equal to one less than the total number of vertices ( E = V-1 ).
+
+A disconnected graph cannot have a spanning tree because it does not span all the vertices. Therefore, it also cannot have a minimum spanning tree. The spanning tree should be acyclic, which means there would not be any cycle in the tree.
