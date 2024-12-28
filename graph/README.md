@@ -5,6 +5,13 @@ The two most common ways to represent graphs are :
 - Adjacency Matrix
 - Adjacency List
 
+#### Connected Components
+Connected component in an undirected graph refers to a group of vertices that are connected to each other through edges, but not connected to other vertices outside the group.
+
+For example in the graph shown below, {0, 1, 2} form a connected component and {3, 4} form another connected component.
+![image](https://github.com/user-attachments/assets/1e712157-b7ed-4998-9666-1837b4f795af)
+
+
 ## Depth First Search (DFS)
 Depth first Search or Depth first traversal is a recursive algorithm for searching all the vertices of a graph or tree data structure. Traversal means visiting all the nodes of a graph. When we traverse an adjacent vertex, we finish the traversal of all vertices reachable through that adjacent vertex. After we finish traversing one adjacent vertex and its reachable vertices, we move to the next adjacent vertex and repeat the process. This is similar to a tree, where we first completely traverse the left subtree and then move to the right subtree. The key difference is that, unlike trees, graphs may contain cycles (a node may be visited more than once). To avoid processing a node multiple times, we use a boolean visited array.
 > Data Structure : Stack
