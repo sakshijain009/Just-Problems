@@ -17,7 +17,7 @@ Hamiltonian Path in a graph G is a path that visits every vertex of G exactly on
 
 ## Breadth First Search (BFS)
 Breadth-first search is a graph traversal algorithm that starts traversing the graph from the root node and explores all the neighboring nodes. Then, it selects the nearest node and explores all the unexplored nodes. BFS puts every vertex of the graph into two categories - visited and non-visited. It selects a single node in a graph and, after that, visits all the nodes adjacent to the selected node.
-Data Structure : Queue
+> Data Structure : Queue
 
 ### Cyclic Graph
 - A cyclic graph contains one or more cycles or closed paths, which means that you can traverse the graph and end up where you started.
