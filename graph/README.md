@@ -51,3 +51,14 @@ The minimum spanning tree has all the properties of a spanning tree with an adde
 - There is a fixed number of edges in the spanning tree which is equal to one less than the total number of vertices ( E = V-1 ).
 
 A disconnected graph cannot have a spanning tree because it does not span all the vertices. Therefore, it also cannot have a minimum spanning tree. The spanning tree should be acyclic, which means there would not be any cycle in the tree.
+
+#### Prim's Algorithm
+This is a greedy algorithm. This algorithm has the following workflow:
+
+- It starts by selecting an arbitrary vertex and then adding it to the MST. Then, it repeatedly checks for the minimum edge weight that connects one vertex of MST to another vertex that is not yet in the MST.
+- This process is continued until all the vertices are included in the MST.
+
+To efficiently select the minimum weight edge for each iteration, this algorithm uses priority_queue to store the vertices sorted by their minimum edge weight currently. It also simultaneously keeps track of the MST using an array or other data structure suitable considering the data type it is storing.
+
+- Prim’s algorithm are designed for undirected graphs only.
+- Prim’s algorithms has a time complexity of O(ElogE), where E is the number of edges in the graph.
