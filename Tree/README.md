@@ -20,4 +20,8 @@ Postorder traversal is defined as a type of tree traversal which follows the Lef
 
 - The left subtree is traversed first
 - Then the right subtree is traversed
+
+### LevelOrder
+Level Order Traversal technique is defined as a method to traverse a Tree such that all nodes present in the same level are traversed completely before traversing the next level.
+> using a queue
 - Finally, the root node of the subtree is traversed
