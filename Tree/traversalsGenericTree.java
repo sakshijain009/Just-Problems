@@ -1,6 +1,8 @@
 
 import java.io.IOException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Queue;
 import java.util.Stack;
 
 /*
@@ -33,6 +35,81 @@ class GenericTree {
 
         for (Node child: node.children){
             display(child);
+        }
+    }
+
+    // LevelOrder Linewise
+    public static void levelOrderLinewise(Node root) {
+        Queue<Node> mainQueue = new ArrayDeque<>();
+        Queue<Node> childQueue = new ArrayDeque<>();
+        mainQueue.add(root);
+
+        while (!mainQueue.isEmpty()) {
+            Node temp = mainQueue.remove();
+            System.out.print(temp.data + " ");
+
+            for (Node child: temp.children) {
+                childQueue.add(child);
+            }
+
+            if (mainQueue.isEmpty()) {
+                mainQueue = childQueue;
+                childQueue = new ArrayDeque<>();
+                System.out.print("\n");
+            }
+        }
+    }
+
+    // LevelOrder Linewise Approach 2
+    public static void levelOrderLinewiseApproach2(Node root) {
+        Queue<Node> mainQueue = new ArrayDeque<>();
+        mainQueue.add(root);
+        mainQueue.add(new Node(-1));
+
+        while (!mainQueue.isEmpty()) {
+            Node temp = mainQueue.remove();
+
+            if (temp.data == -1) {
+                if (!mainQueue.isEmpty()) {
+                    mainQueue.add(new Node(-1));
+                    System.out.println();
+                }
+            } else {
+                System.out.print(temp.data + " ");
+                for (Node child: temp.children) {
+                    mainQueue.add(child);
+                }
+            }
+        }
+    }
+
+    // LevelOrder Zigzag
+    public static void levelOrderZigzag(Node root) {                //          1
+        Stack<Node> s1 = new Stack<>();                             //       2     3
+        Stack<Node> s2 = new Stack<>();                             //     4  5   6  7
+        s1.push(root);                                              // Printed as : 1
+                                                                    //              3 2
+        int lvl = 1;                                                //              4 5 6 7
+        while (!s1.isEmpty()) {
+            Node temp = s1.pop();
+            System.out.print(temp.data + " ");
+
+            if (lvl%2!=0) {
+                for (Node child : temp.children) {
+                    s2.push(child);
+                }
+            } else {
+                for (int i = temp.children.size()-1; i >= 0 ; i--) {
+                    s2.push(temp.children.get(i));
+                }
+            }
+
+            if (s1.isEmpty()) {
+                s1 = s2;
+                s2 = new Stack<>();
+                System.out.println();
+                lvl++;
+            }
         }
     }
 
@@ -93,7 +170,7 @@ class GenericTree {
         display(root);
 
         System.out.println("\n");
-        
+
         // PreOrder Traversal
         preorderTraversal(root);
 
@@ -101,6 +178,21 @@ class GenericTree {
 
         // PostOrder Traversal
         postTraversal(root);
+
+        System.out.println("\n");
+
+        // levelOrder Traversal Linewise
+        levelOrderLinewise(root);
+
+        System.out.println("\n");
+
+        // levelOrder Traversal Linewise Without Child queue
+        levelOrderLinewiseApproach2(root);
+
+        System.out.println("\n");
+
+        // levelOrder Traversal Zigzag
+        levelOrderZigzag(root);
 
         System.out.println("\n");
 
