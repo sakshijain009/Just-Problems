@@ -37,6 +37,51 @@ t.start();
 * `Thread` is a class that represents a thread of execution.
   Using `Runnable` is preferred as it allows extending other classes.
 
+#### 🔍 Runnable vs Thread in Java
+
+| Feature                     | `Runnable`                              | `Thread`                                 |
+|----------------------------|------------------------------------------|------------------------------------------|
+| Type                       | Interface                                | Class                                    |
+| Inheritance                | Can extend another class                 | Cannot extend another class              |
+| Flexibility                | More flexible                            | Less flexible                            |
+| Reusability                | Runnable object can be reused            | Thread object is tied to a specific task |
+| Task-Thread Separation     | Yes — defines task only                  | No — task and execution are coupled      |
+| Multiple Threads for Task  | Yes — same Runnable can be used by many | No — Thread is both task and thread      |
+| Best Practice              | Recommended                              | Not recommended unless customization is needed |
+
+#### 💡 Example 1: Using Runnable (Preferred)
+```java
+class MyRunnable implements Runnable {
+    public void run() {
+        System.out.println("Runnable thread is running...");
+    }
+}
+
+public class RunnableExample {
+    public static void main(String[] args) {
+        Runnable r = new MyRunnable();
+        Thread t = new Thread(r); // pass Runnable to Thread
+        t.start();
+    }
+}
+```
+
+#### 💡 Example 2: Extending Thread Class
+```java
+class MyThread extends Thread {
+    public void run() {
+        System.out.println("Thread subclass is running...");
+    }
+}
+
+public class ThreadExample {
+    public static void main(String[] args) {
+        Thread t = new MyThread();
+        t.start();
+    }
+}
+```
+
 ## 5. Purpose of the start() method in the Thread class?
 
 The `start()` method initiates the thread's execution, internally calling the `run()` method.
