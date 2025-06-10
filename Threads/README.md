@@ -178,9 +178,130 @@ if (lock1.tryLock(1, TimeUnit.SECONDS)) {
 
 ## 9. Different ways to achieve thread synchronization in Java?
 
-* `synchronized` methods
-* `synchronized` blocks
-* `ReentrantLock` from `java.util.concurrent.locks`
+Thread synchronization in Java ensures that multiple threads do not interfere with each other when accessing shared resources, helping to maintain **data consistency** and avoid **race conditions**.
+
+### ✅ 1. Synchronized Method
+A synchronized method locks the object for which it is called. Only one thread can execute it on a given object at any time.
+
+```java
+public class Counter {
+    private int count = 0;
+
+    public synchronized void increment() {
+        count++;
+    }
+}
+```
+
+### ✅ 2. Synchronized Block
+Instead of synchronizing the whole method, a specific block of code can be synchronized for more control and better performance.
+
+```java
+public void increment() {
+    synchronized (this) {
+        count++;
+    }
+}
+```
+
+### ✅ 3. Static Synchronized Method
+Locks on the .class object, so it is shared across all instances of the class.
+
+```java
+public class Logger {
+    public static synchronized void log(String message) {
+        System.out.println(message);
+    }
+}
+```
+
+### ✅ 4. Lock Interface (java.util.concurrent.locks.Lock)
+- Provides more flexible synchronization than synchronized blocks.
+- Allows timeout-based locking.
+- Can interrupt threads waiting for the lock.
+
+```java
+import java.util.concurrent.locks.*;
+
+Lock lock = new ReentrantLock();
+
+lock.lock();
+try {
+    // critical section
+} finally {
+    lock.unlock();
+}
+```
+
+### ✅ 5. ReentrantLock
+- A concrete implementation of the Lock interface.
+- Same thread can acquire it multiple times (reentrant).
+- Provides fairness option and tryLock().
+
+```java
+ReentrantLock lock = new ReentrantLock(true); // fair lock
+
+lock.lock();
+try {
+    // critical section
+} finally {
+    lock.unlock();
+}
+```
+
+### ✅ 6. Volatile Keyword
+- Used for variable visibility between threads.
+- Does not guarantee atomicity.
+- Suitable for flags and state indicators.
+
+```java
+private volatile boolean running = true;
+
+public void stop() {
+    running = false;
+}
+```
+
+### ✅ 7. Atomic Variables (java.util.concurrent.atomic)
+Provides thread-safe, lock-free operations.
+Examples: AtomicInteger, AtomicBoolean, AtomicLong, etc.
+
+```java
+import java.util.concurrent.atomic.*;
+
+AtomicInteger count = new AtomicInteger(0);
+count.incrementAndGet(); // thread-safe
+```
+
+### ✅ 8. Thread-safe Collections
+Use collections from java.util.concurrent package:
+
+- ConcurrentHashMap
+- CopyOnWriteArrayList
+- BlockingQueue
+
+These provide internal synchronization.
+
+```java
+ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();
+map.put("Java", 1);
+```
+
+### ✅ 9. Semaphores
+Control access to a particular resource by multiple threads. Useful when you want to limit the number of threads accessing a resource.
+
+```java
+import java.util.concurrent.*;
+
+Semaphore semaphore = new Semaphore(3); // 3 threads can access
+
+semaphore.acquire();
+try {
+    // critical section
+} finally {
+    semaphore.release();
+}
+```
 
 ## 10. Difference between synchronized method and synchronized block?
 
