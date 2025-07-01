@@ -43,4 +43,25 @@ class Solution {
 
         return left == right && j == i + 1;
     }
+
+    /*
+        Find the first index in the array such that the sum of elements before it is equal 
+        to the sum of elements after it. Return -1 if no such point exists.
+    */
+    int equalSum(int[] arr) {
+        int sum = 0;
+        for(int num : arr) {
+            sum += num;
+        }
+        
+        int prefixSum = 0;
+        for(int i = 0; i<arr.length; i++) {
+            prefixSum += arr[i];
+            if(prefixSum - arr[i] == sum - prefixSum) {
+                return i;
+            }
+        }
+        
+        return -1;
+    }
 }
