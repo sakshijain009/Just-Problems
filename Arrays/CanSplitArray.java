@@ -5,7 +5,7 @@ class Solution {
     // Prefix sums: 1, 3, 6, 14, 16, 17 → none equal 10 before last index
     // Hence, return false
   
-    public boolean canSplit(int[] arr) {
+    public boolean canSplit(int[] arr) { // (Using Prefix Sum)
         int total = 0;
         for (int num : arr) {
             total += num;
