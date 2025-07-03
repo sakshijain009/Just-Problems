@@ -149,4 +149,42 @@ A thread waiting on .acquire() is paused until another thread releases the permi
 
 #### ✅ Final Takeaway
 - The number() thread calls .release() to wake up the appropriate worker thread.
-- The worker thread has already been blocked on .acquire(), waiting for this signal. So calling .release() without .acquire() in the same method is perfectly correct in multithreaded coordination.
+- The worker thread has already been blocked on .acquire(), waiting for this signal. So calling .release() without
+- .acquire() in the same method is perfectly correct in multithreaded coordination.
+
+### 🧵 Here’s How the FizzBuzz Program Ends
+#### Main Logic Ends at current > n
+In the number() method:
+```java
+while (current <= n) {
+    semNumber.acquire();
+    ...
+    current++;
+}
+```
+Once current exceeds n, the loop ends.
+
+#### Graceful Exit: Final Releases
+Right after the loop ends, we see:
+
+```java
+// Graceful exit: signal worker threads to terminate
+semFizzBuzz.release();
+semFizz.release();
+semBuzz.release();
+```
+🔔 This is crucial. It unblocks the fizz(), buzz(), and fizzbuzz() threads if they are waiting. They’ll wake up, see that current > n, and then break out of their loops.
+
+#### 🔚 In Worker Threads:
+Each worker thread checks this condition after acquiring the semaphore:
+
+```java
+semFizz.acquire(); // or buzz, fizzbuzz
+if (current > n) break;
+```
+
+So when the final .release() is called and they wake up:
+
+- They check current > n
+- Realize the job is done
+- And exit gracefully
