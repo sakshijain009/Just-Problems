@@ -41,3 +41,18 @@ To solve this, you must synchronize access to shared resources and ensure that:
 - 3 → fizz thread prints "Fizz"
 - 4 → number thread prints 4
 - 5 → buzz thread prints "Buzz"
+
+## 🛠️ What is a Semaphore in Java?
+
+A **Semaphore** in Java is a concurrency utility from `java.util.concurrent` that controls access to shared resources using permits.
+
+### 🔐 Definition:
+> A semaphore maintains a set of **permits**. Threads can acquire a permit before proceeding. If no permit is available, the thread waits until one is released.
+
+### 🧭 Why Use Semaphore?
+
+In multithreaded problems like FizzBuzz:
+
+- It ensures that **only the correct thread is allowed to print** for each number.
+- Prevents **race conditions** by allowing only one thread to proceed at a time based on logic.
+- Helps you simulate **conditional locks** (e.g., only `fizz` should print when `current % 3 == 0`).
