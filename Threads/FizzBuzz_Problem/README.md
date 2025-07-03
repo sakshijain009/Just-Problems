@@ -101,3 +101,52 @@ Thread t1 = new Thread(() -> {
 
 - When we call printFizz.run();
 - It executes the code in the lambda → System.out.print("Fizz ")
+
+### ❓ Doubt: Why Do We Call `.release()` Without `.acquire()`?
+
+In the FizzBuzz multithreading problem, we have the following code in the `number()` method:
+
+```java
+if (current % 3 == 0 && current % 5 == 0) {
+    semFizzBuzz.release();  // Where is semFizzBuzz.acquire()?
+}
+```
+
+The doubt is - Why do we call semFizzBuzz.release() without calling semFizzBuzz.acquire() first? Doesn’t every .release() need a matching .acquire()?
+
+**✅ Answer:** It’s About Thread Communication, Not Pairing in Same Method. This is completely valid and actually a key pattern in multithreading.
+
+**🧵 Think in Terms of Multiple Threads:**
+The .release() and .acquire() don’t have to appear in the same thread. In fact, they are intentionally used in different threads to signal one another.
+
+#### 👇 How It Works in FizzBuzz
+1. fizzbuzz() thread is waiting:
+```java
+semFizzBuzz.acquire();  // Blocks until someone calls release
+```
+2. number() thread decides when it's FizzBuzz time:
+```java
+semFizzBuzz.release();  // Signals fizzbuzz thread to wake up
+```
+
+The number() thread is the controller. It checks the current number and signals the appropriate thread (fizz, buzz, or fizzbuzz) to do the printing. That signal is done via .release().
+
+#### 🔄 Roles of Threads
+
+| **Thread**    | **Waits on**               | **Triggered by**                          |
+|---------------|----------------------------|-------------------------------------------|
+| `fizz()`      | `semFizz.acquire()`        | `semFizz.release()` from `number()`       |
+| `buzz()`      | `semBuzz.acquire()`        | `semBuzz.release()` from `number()`       |
+| `fizzbuzz()`  | `semFizzBuzz.acquire()`    | `semFizzBuzz.release()` from `number()`   |
+| `number()`    | `semNumber.acquire()`      | `semNumber.release()` from worker threads |
+
+
+#### 🔁 Recap Analogy
+- Think of .release() as a green light.
+- Think of .acquire() as a driver waiting at a red light.
+
+A thread waiting on .acquire() is paused until another thread releases the permit. Once .release() is called, the waiting thread wakes up and proceeds.
+
+#### ✅ Final Takeaway
+- The number() thread calls .release() to wake up the appropriate worker thread.
+- The worker thread has already been blocked on .acquire(), waiting for this signal. So calling .release() without .acquire() in the same method is perfectly correct in multithreaded coordination.
