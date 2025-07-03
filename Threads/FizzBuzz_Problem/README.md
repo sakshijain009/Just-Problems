@@ -56,3 +56,48 @@ In multithreaded problems like FizzBuzz:
 - It ensures that **only the correct thread is allowed to print** for each number.
 - Prevents **race conditions** by allowing only one thread to proceed at a time based on logic.
 - Helps you simulate **conditional locks** (e.g., only `fizz` should print when `current % 3 == 0`).
+
+### 🔍 What Does the `0` Mean?
+
+The number `0` passed to the `Semaphore` constructor defines the **initial number of available permits**.
+
+A **permit** is like a signal — it tells a thread whether it can proceed or not.
+
+So:
+
+```java
+new Semaphore(0);
+```
+
+means that no thread can acquire the semaphore right away. Threads calling semFizz.acquire() will block and wait until some other thread releases a permit using semFizz.release().
+
+### Logic in Code
+🧠 Key Concept
+The use of Runnable lets you inject behavior into a thread without hardcoding what it does. It’s a form of callback — and Runnable is Java’s simplest interface for this.
+
+```java
+public void fizz(Runnable printFizz) throws InterruptedException
+```
+
+#### ✅ What does this mean?
+- fizz is a method that will be executed by the Fizz thread in the FizzBuzz problem.
+- It takes one argument, printFizz, which is a Runnable.
+- That means: it is a block of code that can be executed via printFizz.run().
+- It can throw InterruptedException (required when using Semaphore.acquire()).
+
+#### 🧠 But how does printFizz.run() do System.out.println("Fizz")?
+Because the caller of this method (typically the main thread or thread setup code) passes in a Runnable that already defines what to print.
+
+
+Here’s how it might be passed in:
+```java
+Thread t1 = new Thread(() -> {
+    try {
+        fizzBuzz.fizz(() -> System.out.print("Fizz "));
+    } catch (InterruptedException ignored) {}
+});
+```
+🔁 So inside fizz():
+
+- When we call printFizz.run();
+- It executes the code in the lambda → System.out.print("Fizz ")
