@@ -4,6 +4,15 @@
 
 _Imagine Swiggy is building a new conversational AI assistant for its delivery partners. This assistant needs to handle multi-turn conversations, understand context across different interactions, and integrate with various internal systems. How would you design the core data model to store and manage the conversation context for such an agent, ensuring it's scalable, consistent, and handles sensitive information appropriately?_
 
+### 🧭 Step 1: Understand the System Requirements
+
+### 🔹 The Assistant Needs To:
+- Support multi-turn conversations (track history and context)
+- Understand context across interactions (sessions may span minutes, hours, or days)
+- Integrate with internal systems (order info, routing, partner onboarding, payments)
+- Be scalable (handle millions of delivery partners)
+- Ensure data consistency and security (manage sensitive info like location, payment)
+
 ### ✅ 1. What is Conversation Context?
 
 The assistant must retain structured memory across turns, including:
@@ -14,6 +23,16 @@ The assistant must retain structured memory across turns, including:
 - **External data references** (e.g., order ID, payout info)
 - **Interaction flags** (e.g., retry attempts, handoff triggers)
 
+### ✅ Context Includes:
+
+| Context Type         | Example                                |
+|----------------------|----------------------------------------|
+| User Profile         | Partner ID, name, language, city       |
+| Session Metadata     | Channel, timestamp, device info        |
+| Conversation History | Previous turns, intents, entities      |
+| Task/Goal State      | "Partner is checking payment status"   |
+| External Data        | Order details, payout, delivery status |
+| Flags/Memory         | "Partner asked this before", preferences |
 
 ### 🧱 2. Core Data Model Design
 
@@ -23,48 +42,74 @@ A **hybrid design** is used:
 - **Document store** (e.g., MongoDB/DynamoDB) for durability and querying
 - **Time-to-live (TTL)** on session documents for cleanup
 
-#### 🗃️ Session Metadata (`ConversationSession`)
+| Layer | Component            | Purpose                                       | Storage Type                    |
+|-------|----------------------|-----------------------------------------------|----------------------------------|
+| 1️⃣    | `ConversationSession` | Stores metadata for each session              | Relational DB (PostgreSQL/MySQL) |
+| 2️⃣    | `ConversationTurn`    | Stores message logs and parsed NLU data       | Relational DB / S3 / BigQuery    |
+| 3️⃣    | `ContextStore`        | Stores real-time conversation state & memory  | Redis / DynamoDB / MongoDB       |
+
+#### 📄 1. `ConversationSession` Table
+
+Stores metadata about the current session. Used for session tracking, cleanup, and analytics.
+
+| Field               | Type      | Notes                                           |
+|---------------------|-----------|-------------------------------------------------|
+| `session_id`         | UUID      | Primary key                                     |
+| `partner_id`         | String    | Delivery partner identifier                     |
+| `start_time`         | Timestamp | Session start time                              |
+| `last_activity_time` | Timestamp | Updated on each message to support TTL tracking |
+| `channel`            | Enum      | e.g., `whatsapp`, `ivr`, `mobile_app`           |
+| `current_task`       | String    | Optional — e.g., `"resolve_payment"`            |
+| `language`           | String    | ISO language code (e.g., `en`, `hi`)            |
+| `expires_at`         | Timestamp | Optional — can support fixed TTLs               |
+
+#### 💬 2. `ConversationTurn` Table
+
+Stores each turn (user or bot message) in the conversation. Used for replay, training, auditing.
+
+| Field               | Type      | Notes                                              |
+|---------------------|-----------|----------------------------------------------------|
+| `turn_id`            | UUID      | Primary key                                        |
+| `session_id`         | FK        | Foreign key → `ConversationSession.session_id`     |
+| `timestamp`          | Timestamp | When the message was sent/received                 |
+| `sender`             | Enum      | Either `'user'` or `'bot'`                         |
+| `message_text`       | Text      | Raw user or bot message                            |
+| `parsed_intent`      | String    | Intent detected by NLU system                      |
+| `extracted_entities` | JSONB     | Example: `{"order_id": "ORD123", "date": "today"}` |
+| `response_text`      | Text      | Agent's final response (if applicable)             |
+
+
+#### 🧠 3. `ContextStore` – Active Context (Document / KV Store)
+
+Used for live reasoning — this is the working memory of the assistant. TTL-based, high-speed access.
+
+Example document (stored in Redis/MongoDB/DynamoDB):
 
 ```json
 {
-  "session_id": "sess-123",
+  "session_id": "sess-abc123",
   "partner_id": "P7689",
-  "language": "Hindi",
-  "channel": "WhatsApp",
-  "start_time": "2024-07-06T10:00:00Z",
-  "last_active": "2024-07-06T10:12:00Z",
-  "expires_at": "2024-07-06T10:45:00Z"
-}
-```
-
-#### 💬 Dialog Context (ContextState)
-```java
-{
+  "order_tracking": {
+    "order_id": "ORD9823",
+    "status": "out_for_delivery"
+  },
   "goal_state": {
-    "current_goal": "resolve_payment_issue",
-    "step": "verify_account",
-    "status": "in_progress",
-    "entities": {
-      "month": "June",
-      "amount": "₹1420"
-    }
+    "current_goal": "resolve_payment",
+    "step": "verify_bank",
+    "status": "in_progress"
+  },
+  "conversation_flags": {
+    "is_repeat_query": true,
+    "asked_about_payment": true,
+    "awaiting_external_data": false
   },
   "short_term_memory": {
-    "last_intent": "ask_payment_status",
-    "last_bot_action": "requested_month",
-    "repeat_count": 1
-  },
-  "external_references": {
-    "order_id": "ORD9821",
-    "last_known_status": "Out for Delivery"
-  },
-  "flags": {
-    "awaiting_payment_confirmation": true,
-    "needs_escalation": false
+    "preferred_language": "Hindi",
+    "last_user_intent": "ask_payment_status",
+    "last_bot_action": "confirm_month"
   }
 }
 ```
-Stored in cold storage (e.g., BigQuery or S3) for training, analytics, and audit logs.
 
 I would design a session-scoped JSON context model that includes the current goal state, conversation memory, external references, and runtime flags. Active sessions would be stored in Redis (with TTL) for low-latency access, backed by MongoDB or DynamoDB for durability. External systems like orders or payouts are accessed via APIs or Kafka listeners, with updates reflected in the context in real time. The system is scalable, fault-tolerant, and ensures secure handling of sensitive partner information through encryption, TTL cleanup, and tokenization.
 
