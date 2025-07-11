@@ -1,11 +1,72 @@
 # 🧠 Swiggy Conversational AI System Design – Deep-Dive Questions
 
-## 1. Core Context Model Design
+## 🔍 Problem Statement
 
-**Q:**  
 _Imagine Swiggy is building a new conversational AI assistant for its delivery partners. This assistant needs to handle multi-turn conversations, understand context across different interactions, and integrate with various internal systems. How would you design the core data model to store and manage the conversation context for such an agent, ensuring it's scalable, consistent, and handles sensitive information appropriately?_
 
----
+### ✅ 1. What is Conversation Context?
+
+The assistant must retain structured memory across turns, including:
+
+- **Identity** of the delivery partner (ID, language, region)
+- **Dialog flow state** (current goal, sub-task progress)
+- **Conversation memory** (recent user intents, bot actions)
+- **External data references** (e.g., order ID, payout info)
+- **Interaction flags** (e.g., retry attempts, handoff triggers)
+
+
+### 🧱 2. Core Data Model Design
+
+A **hybrid design** is used:
+
+- **Fast in-memory store** (e.g., Redis) for active session context
+- **Document store** (e.g., MongoDB/DynamoDB) for durability and querying
+- **Time-to-live (TTL)** on session documents for cleanup
+
+#### 🗃️ Session Metadata (`ConversationSession`)
+
+```json
+{
+  "session_id": "sess-123",
+  "partner_id": "P7689",
+  "language": "Hindi",
+  "channel": "WhatsApp",
+  "start_time": "2024-07-06T10:00:00Z",
+  "last_active": "2024-07-06T10:12:00Z",
+  "expires_at": "2024-07-06T10:45:00Z"
+}
+```
+
+#### 💬 Dialog Context (ContextState)
+```java
+{
+  "goal_state": {
+    "current_goal": "resolve_payment_issue",
+    "step": "verify_account",
+    "status": "in_progress",
+    "entities": {
+      "month": "June",
+      "amount": "₹1420"
+    }
+  },
+  "short_term_memory": {
+    "last_intent": "ask_payment_status",
+    "last_bot_action": "requested_month",
+    "repeat_count": 1
+  },
+  "external_references": {
+    "order_id": "ORD9821",
+    "last_known_status": "Out for Delivery"
+  },
+  "flags": {
+    "awaiting_payment_confirmation": true,
+    "needs_escalation": false
+  }
+}
+```
+Stored in cold storage (e.g., BigQuery or S3) for training, analytics, and audit logs.
+
+I would design a session-scoped JSON context model that includes the current goal state, conversation memory, external references, and runtime flags. Active sessions would be stored in Redis (with TTL) for low-latency access, backed by MongoDB or DynamoDB for durability. External systems like orders or payouts are accessed via APIs or Kafka listeners, with updates reflected in the context in real time. The system is scalable, fault-tolerant, and ensures secure handling of sensitive partner information through encryption, TTL cleanup, and tokenization.
 
 ## 2. Contact Store JSON Structure & Short-Term Memory
 
