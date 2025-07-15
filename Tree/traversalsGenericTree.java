@@ -113,6 +113,40 @@ class GenericTree {
         }
     }
 
+    // LevelOrder Zigzag Binary Tree
+    public ArrayList<Integer> findSpiralBT(Node root) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        if(root == null) return ans;
+        
+        Stack<Node> st1 = new Stack<>();
+        Stack<Node> st2 = new Stack<>();
+        
+        st1.add(root);
+        
+        int level = 0;
+        
+        while(!st1.isEmpty()) {
+            while (!st1.isEmpty()) {
+                Node temp = st1.pop();
+                ans.add(temp.data);
+    
+                if (level % 2 == 0) {
+                    if (temp.right != null) st2.push(temp.right);
+                    if (temp.left != null) st2.push(temp.left);
+                } else {
+                    if (temp.left != null) st2.push(temp.left);
+                    if (temp.right != null) st2.push(temp.right);
+                }
+            }
+            
+            st1 = st2;
+            st2 = new Stack<>();
+            level++;
+        }
+        
+        return ans;
+    }
+
     // PreOrder Traversal
     public static void preorderTraversal(Node root) {
         System.out.print(root.data + " ");
