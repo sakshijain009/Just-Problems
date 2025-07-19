@@ -25,26 +25,31 @@
 
 class Solution {
     static int isGoodorBad(String S) {
-        return dfs(S.toCharArray(), 0, 0, 0) ? 1 : 0;
-    }
+        int v = 0, c = 0; // v: current streak of vowels, c: current streak of consonants
 
-    static boolean dfs(char[] s, int idx, int v, int c) {
-        if (v > 5 || c > 3) return false;
-        if (idx == s.length) return true;
+        for (int i = 0; i < S.length(); i++) {
+            char ch = S.charAt(i);
 
-        char ch = s[idx];
-
-        if (ch == '?') {
-            // Try both: as vowel and as consonant
-            return dfs(s, idx + 1, v + 1, 0) || dfs(s, idx + 1, 0, c + 1);
-        } else if (isVowel(ch)) {
-            return dfs(s, idx + 1, v + 1, 0);
-        } else {
-            return dfs(s, idx + 1, 0, c + 1);
+            if (isVowel(ch)) {
+                v++;    // increase vowel count
+                c = 0;  // reset consonant count
+                if (v > 5) return 0; // Bad string
+            } else if (ch == '?') {
+                v++;    // consider '?' as vowel
+                c++;    // also consider '?' as consonant
+                if (v > 5 || c > 3) return 0; // Bad string
+            } else {
+                c++;    // increase consonant count
+                v = 0;  // reset vowel count
+                if (c > 3) return 0; // Bad string
+            }
         }
+
+        return 1; // Good string
     }
 
-    static boolean isVowel(char ch) {
+    // Utility function to check if a character is a vowel
+    public static boolean isVowel(char ch) {
         return "aeiou".indexOf(ch) != -1;
     }
 }
