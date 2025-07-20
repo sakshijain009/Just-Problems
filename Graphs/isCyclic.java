@@ -97,4 +97,40 @@ class Scratch {
         return false;
     }
 
+  // Method 2
+  public boolean hasACycle(ArrayList<Integer>[] graph, boolean[] visited, int src) {
+        Queue<Integer> queue = new ArrayDeque<>();
+        queue.offer(src);
+        
+        int[] parent = new int[visited.length];
+        Arrays.fill(parent, -1);
+        
+        visited[src] = true;
+
+        while (!queue.isEmpty()) {
+            int vertex = queue.poll();
+
+            for (int nbr : graph[vertex]) {
+                if (!visited[nbr]) {
+                    visited[nbr] = true;
+                    parent[nbr] = vertex;
+                    queue.add(nbr);
+                } else if(nbr != parent[vertex]) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+    
+    class Pair {
+        int vertex, parent;
+
+        Pair(int v, int p) {
+            vertex = v;
+            parent = p;
+        }
+    }
+
 }
