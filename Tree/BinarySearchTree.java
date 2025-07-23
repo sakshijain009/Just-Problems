@@ -60,6 +60,18 @@ class Tree {
         return pair;
     }
 
+    public static boolean isItABinaryTree(Node root) {
+        return isBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+    
+    public static boolean isBST(Node node, long min, long max) {
+        if (node == null) return true;
+    
+        if (node.data <= min || node.data >= max) return false;
+    
+        return isBST(node.left, min, node.data) && isBST(node.right, node.data, max);
+    }
+
     public static void largestBinarySearchSubTree(Node root) {
         BSTPair bp = largestBinarySearchSubTreeHelper(root);
         System.out.println(bp.root.data + " with size of " + bp.size);
